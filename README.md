@@ -1,58 +1,23 @@
-# Tic-Tac-Toe (Reinforcement Learning)
+# Tic-Tac-Toe Reinforcement Learning
 
-This project supports both GUI and terminal modes, with train/load/save support for the Q-value model.
+Simple tabular Q-learning implementation with both GUI training/playback and CLI experimentation modes.
 
-## Setup
+## Requirements
+- Python 3.10+ (standard library only, though `tkinter` is required for the GUI).
 
-From the repo root:
+## Usage
+- `python game.py` (default): launches `tkinter` via `gui.py`, letting you train, save/load Q-values, and play human vs CPU.
+  - Controls: set generation/test counts, press `Train`/`Test`, then choose `Play First (X)` or `Play Second (O)` to start a new match.
+  - `Save`/`Load` operate on `.pkl` files; the default `tictactoe_qvalues.pkl` lives in this folder.
+- `python game.py --cli`: runs the CLI menu that supports player vs CPU, CPU vs CPU, or self-play testing.
+- `python gui.py`: bypasses the launcher and opens the GUI directly.
 
-```bash
-cd reinforcement_learning/tic_tac_toe
-```
+## Files
+- `game.py`: launcher that handles CLI flags and redirects to `gui.py` or CLI menus defined in `game_logic.py`.
+- `gui.py`: Tkinter app that exposes training counters, play buttons, and a board display.
+- `game_logic.py`: board representation, Q-learning loops, serialization helpers, and CLI menus.
+- `tictactoe_qvalues.pkl`: precomputed Q-values used by default when launching the GUI.
 
-No external packages are required beyond standard Python (`tkinter` needed for GUI).
-
-## Which file should I run?
-
-### 1) Main launcher (recommended)
-
-```bash
-python game.py
-```
-
-- Opens the Tkinter GUI by default.
-
-### 2) Terminal mode (CLI)
-
-```bash
-python game.py --cli
-```
-
-CLI menu options:
-- Player vs CPU
-- Watch CPU vs CPU
-- Test CPU playing itself
-
-### 3) Direct GUI entry point
-
-```bash
-python gui.py
-```
-
-## GUI workflow
-
-1. Set `Gen1`, `Gen2`, and `Test` game counts.
-2. Click `Train` to train/update Q-values.
-3. Click `Save` to store a model (`.pkl`), or `Load` to open one.
-4. Use `Play First (X)` or `Play Second (O)` to pick turn order.
-5. Click `New Game` (or either play-order button, which also starts a fresh game).
-
-Default model file in this folder:
-- `tictactoe_qvalues.pkl`
-
-## Files at a glance
-
-- `game.py`: compatibility launcher (GUI by default, CLI with `--cli`)
-- `gui.py`: Tkinter app for training + playing
-- `game_logic.py`: board logic, Q-learning data, CLI, model serialization
-- `tictactoe_qvalues.pkl`: saved model data
+## Notes
+- Training parameters (learning rate, epsilon, episodes) live inside `game_logic.py`; tweak them to observe how the agent learns.
+- Use the CLI mode to snapshot different policies before loading them into the GUI.
